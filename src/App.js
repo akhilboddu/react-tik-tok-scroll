@@ -14,47 +14,22 @@ function App() {
 
   return (
     // BEM
+
     <div className="app">
       <div className="app__videos">
         {videos.map(
-          ({ url, channel, description, song, likes, messages, shares }) => (
+          ({ url, channel, description, song, likes, messages, shares, quizOptions }) => (
             <>
-            <Video
-              url={url}
-              channel={channel}
-              song={song}
-              likes={likes}
-              messages={messages}
-              description={description}
-              shares={shares}
-            />
-            <Video
-              url={url}
-              channel={channel}
-              song={song}
-              likes={likes}
-              messages={messages}
-              description={description}
-              shares={shares}
-            />
-            <Video
-              url={url}
-              channel={channel}
-              song={song}
-              likes={likes}
-              messages={messages}
-              description={description}
-              shares={shares}
-            />
-            <Video
-              url={url}
-              channel={channel}
-              song={song}
-              likes={likes}
-              messages={messages}
-              description={description}
-              shares={shares}
-            />
+              <Video
+                url={url}
+                channel={channel}
+                song={song}
+                likes={likes}
+                messages={messages}
+                description={description}
+                shares={shares}
+                quizOptions={quizOptions}
+              />
             </>
           )
         )}

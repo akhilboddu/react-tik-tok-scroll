@@ -1,11 +1,31 @@
 .videoSidebar {
   position: absolute;
   top: 50%;
-  right: 10px;
   color: white;
+  right: 0;
+}
+
+.videoSidebar p {
+  color: white;
+  font-weight: 600;
 }
 
 .videoSidebar__button {
-  padding: 20px;
+  padding: 15px;
+  padding-left: 40px;
+  margin-bottom: 10px;
   text-align: center;
+  background-color: #8556f8;
+  opacity: 0.8;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
 }
+
+.videoSidebar__button:hover {
+  cursor: pointer;
+  background-color: #8556f8;
+  opacity: 1;
+}
+
+
+
