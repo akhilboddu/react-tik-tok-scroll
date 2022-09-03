@@ -1,13 +1,18 @@
 .videoContainer {
-  background-color: #8556f8;
-  opacity: 0.9;
+  background-color: rgba(0,0,0,0);
+  background-image: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0));
   width: 100%;
-  height: 30%;
   position: relative;
-  display: flex;  
-  bottom: 150px;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  display: flex;
+  bottom: 20%;
+  height: 20%;
+  /* bottom: 0; */
+}
+
+.maxVideoContainer {
+  background-image: linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,0.1));
+  bottom: 40%;
+  height: 40%;
 }
 
 .videoFooter {
@@ -24,7 +29,6 @@
 
 .videoFooter__text > p {
   padding-bottom: 20px;
-  
 }
 
 .videoFooter__icon {
@@ -40,7 +44,42 @@
 .videoFooter__text > h3 {
   padding-bottom: 20px;
 }
-
+.post-pic {
+  display: flex;
+  align-items: center;
+}
+.post-pic img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-name {
+  margin-left: 10px;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.video-caption {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.signup-cta {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: white;
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 5px;
+  border: whitesmoke 1px solid;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  margin-left: 5px;
+  cursor: pointer;
+}
 @media only screen and (max-width: 600px) {
   .videoFooter {
     margin-left: 20px;

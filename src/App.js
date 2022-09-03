@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Video from "./Video";
 import db from "./firebase";
 import "./App.css";
+import Footer from "./Footer";
+import Header from "./components/Header/Header";
 
 function App() {
   const [videos, setVideos] = useState([]);
@@ -16,6 +18,7 @@ function App() {
     // BEM
 
     <div className="app">
+      <Header />
       <div className="app__videos">
         {videos.map(
           ({ url, channel, description, song, likes, messages, shares, quizOptions }) => (
@@ -34,6 +37,7 @@ function App() {
           )
         )}
       </div>
+      <Footer />
     </div>
   );
 }

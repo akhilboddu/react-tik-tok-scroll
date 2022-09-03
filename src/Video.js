@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import VideoFooter from "./VideoFooter";
 import VideoSidebar from "./VideoSidebar";
 import useVideoPlayer from "./hooks/useVideoPlayer";
@@ -8,16 +8,17 @@ import "./Video.css";
 function Video({ url, channel, description, quizOptions, song }) {
   // const [playing, setPlaying] = useState(false);
   const videoRef = useRef(null);
-  const {
-    playerState,
-    togglePlay,
-    handleOnTimeUpdate,
-    handleVideoProgress,
-  } = useVideoPlayer(videoRef);
+  const { playerState, togglePlay, handleOnTimeUpdate, handleVideoProgress } =
+    useVideoPlayer(videoRef);
+
+  useEffect(() => {
+    videoRef.current.setAttribute("muted", "");
+    videoRef.current.playsInline = true;
+  }, []);
 
   const myArray = quizOptions.quizDisplayTimeStamp.split(":");
   const pauseVideo = Number(myArray[0]) * 60 + Number(myArray[1]);
-console.log(playerState.progress)
+  console.log(playerState.progress);
   return (
     <div className="video">
       <video
@@ -30,9 +31,11 @@ console.log(playerState.progress)
         onTimeUpdate={handleOnTimeUpdate}
         // autoPlay={true}
         playsInline={true}
+        muted
         poster="https://images.prismic.io/robsimpson/f4bce4e2-ab7d-44c5-96c6-bad7ec3f04f9_video-camera.jpg?auto=compress,format&fm=webp&lossless=false"
       ></video>
       <input
+        className="videofooter"
         type="range"
         style={{ backgroundSize: `${playerState.progress}%` }}
         min="0"
@@ -58,7 +61,10 @@ console.log(playerState.progress)
       ) : null}
 
       {!playerState.isPlaying ? (
-        <VideoFooter channel={channel} description={description} />
+        <>
+          <VideoFooter channel={channel} description={description} />
+          <VideoSidebar quizOptions={quizOptions} videoRef={videoRef} />
+        </>
       ) : null}
     </div>
   );
