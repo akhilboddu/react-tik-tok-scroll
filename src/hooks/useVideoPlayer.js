@@ -18,10 +18,14 @@ const useVideoPlayer = (videoElement) => {
   };
 
   useEffect(() => {
+    // if (playerState.isPlaying) {
+    //   videoElement.current.play().catch((e) => {
+    //     alert(e);
+    //   });
+    // } else {
+    //   videoElement.current.pause();
+    // }
     
-    playerState.isPlaying
-      ? videoElement.current.play()
-      : videoElement.current.pause();
   }, [playerState.isPlaying, videoElement]);
 
   const handleOnTimeUpdate = () => {

@@ -12,6 +12,7 @@ function App() {
     db.collection("videos").onSnapshot((snapshot) =>
       setVideos(snapshot.docs.map((doc) => doc.data()))
     );
+    
   }, []);
 
   return (
@@ -21,10 +22,19 @@ function App() {
       <Header />
       <div className="app__videos">
         {videos.map(
-          ({ url, channel, description, song, likes, messages, shares, quizOptions }) => (
+          ({
+            url,
+            channel,
+            description,
+            song,
+            likes,
+            messages,
+            shares,
+            quizOptions,
+          }) => (
             <>
               <Video
-                url={url}
+                url={"https://zaiocontent.s3.eu-west-2.amazonaws.com/test1.mp4"}
                 channel={channel}
                 song={song}
                 likes={likes}

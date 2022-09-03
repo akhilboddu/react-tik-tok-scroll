@@ -3,7 +3,7 @@
   top: 60%;
   color: white;
   right: 0;
-  background-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0));
+  /* background-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0)); */
 }
 
 .videoSidebar p {
@@ -18,11 +18,17 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 600px) {
+  .videoSidebar {
+    position: absolute;
+    top: 40%;
+    color: white;
+    right: 0;
+  }
+}
+
 /* .videoSidebar__button:hover {
   cursor: pointer;
   background-color: #8556f8;
   opacity: 1;
 } */
-
-
-

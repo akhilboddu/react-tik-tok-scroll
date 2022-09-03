@@ -1,5 +1,7 @@
 html {
   scroll-snap-type: y mandatory;
+  /* height: fill-available;
+  height: -webkit-fill-available; */
 }
 
 .yellow {
@@ -7,6 +9,9 @@ html {
 }
 .purple {
   background-color: #8556f8;
+}
+.zaio-blue {
+  background-color: #0d1e3a;
 }
 
 .app {
@@ -16,21 +21,22 @@ html {
   align-items: center;
   justify-content: center;
   background-color: #0d1e3a;
-  /* padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); */
 }
 
 .app__videos {
   position: relative;
+  top: 0;
   overflow: scroll;
-  height: calc(100vh - 100px);
-  /* max-width: 412px;
-  max-height: 732px; */
+  height: 100%;
+  width: 100%;
+  max-width: 540px;
+  max-height: 960px;
   aspect-ratio: 9 / 16;
   scroll-snap-type: y mandatory;
+  border-radius: 20px;
   /* this property will prevent going to the next on */
   /* overflow: hidden;  */
 }
-
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .app__videos::-webkit-scrollbar {
@@ -47,9 +53,8 @@ html {
   * {
     font-size: 14px;
   }
-  .app__videos {
+  /* .app {
     height: 100vh;
-    /* this property will prevent going to the next on */
-    /* overflow: hidden; */
-  }
+    width: 100vw;
+  } */
 }

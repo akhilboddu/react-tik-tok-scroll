@@ -14,24 +14,28 @@ function Header() {
             strokeColor="#8556f8"
           />
         </div>
-        <div className="stats">
-          <div className="circle">
-            <Circle
-              strokeWidth={4}
-              trailWidth={4}
-              percent={50}
-              strokeColor="#8556f8"
-            />
-            <div className="score">55XP</div>
-          </div>
-          <div className="circle">
-            <Circle
-              strokeWidth={4}
-              trailWidth={4}
-              percent={50}
-              strokeColor="#8556f8"
-            />
-            <div className="score">1 <span role="img" aria-label="emoji">🔥</span></div>
+
+        <div className="circle">
+          <Circle
+            strokeWidth={4}
+            trailWidth={4}
+            percent={50}
+            strokeColor="#8556f8"
+          />
+          <div className="score">55XP</div>
+        </div>
+        <div className="circle">
+          <Circle
+            strokeWidth={4}
+            trailWidth={4}
+            percent={50}
+            strokeColor="#8556f8"
+          />
+          <div className="score">
+            1{" "}
+            <span role="img" aria-label="emoji">
+              🔥
+            </span>
           </div>
         </div>
       </div>

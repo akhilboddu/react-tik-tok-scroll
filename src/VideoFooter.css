@@ -84,4 +84,8 @@
   .videoFooter {
     margin-left: 20px;
   }
+  .videoContainer {
+    position: absolute;
+    bottom: 14vh;
+  }
 }

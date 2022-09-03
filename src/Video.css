@@ -3,13 +3,19 @@
   width: 100%;
   height: 100%;
   scroll-snap-align: start;
+  top: 0;
 }
 
 .video__player {
-  object-fit: fill;
+  position: absolute;
+  top: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: cover;
   width: 100%;
-  height: 100%;
   border-radius: 20px;
+  height: 100%;
 }
 video[poster]{ object-fit:cover; }  /* or object-fit:fill */
 
@@ -20,9 +26,10 @@ video::-webkit-media-controls-panel {
 
 @media only screen and (max-width: 600px) {
   .video__player {
-    object-fit: contain;
+    object-fit: cover;
     width: 100%;
     height: 100%;
+    top: -7vh;
   }
 }
 input[type="range"] {
