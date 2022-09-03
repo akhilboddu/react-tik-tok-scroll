@@ -1,7 +1,6 @@
 import React from "react";
 import "./Header.css";
 import { Line, Circle } from "rc-progress";
-import XP from "../XP/XP";
 
 function Header() {
   return (
@@ -32,7 +31,7 @@ function Header() {
               percent={50}
               strokeColor="#8556f8"
             />
-            <div className="score">1🔥</div>
+            <div className="score">1 <span role="img" aria-label="emoji">🔥</span></div>
           </div>
         </div>
       </div>

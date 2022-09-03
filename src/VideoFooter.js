@@ -13,7 +13,7 @@ function VideoFooter({ channel, description, song }) {
     <div className={`videoContainer ${max ? "maxVideoContainer" : ""}`}>
       <div className="videoFooter">
         <div class="post-pic">
-          <img src="https://res.cloudinary.com/ak-124210/image/upload/v1642434078/yjnzwmihmhghxkwnb6n9.png" />
+          <img alt="pic of course" src="https://res.cloudinary.com/ak-124210/image/upload/v1642434078/yjnzwmihmhghxkwnb6n9.png" />
           <span class="profile-name">What is html?</span>
           <button className="signup-cta">Signup</button>
         </div>
@@ -25,9 +25,9 @@ function VideoFooter({ channel, description, song }) {
               truncateText="…"
               text={t}
               textTruncateChild={
-                <a style={{ cursor: "pointer"}} onClick={() => setMax(true)}>
+                <span style={{ cursor: "pointer"}} onClick={() => setMax(true)}>
                   <strong>view more</strong>
-                </a>
+                </span>
               }
             />
           ) : (

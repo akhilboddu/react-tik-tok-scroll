@@ -14,7 +14,7 @@ function Footer() {
         <MdMovieFilter className="icons" />
         <MdOutlineGroupAdd className="icons" />
         <div class="icons post-pic">
-          <img src="https://zaiocontent.s3.eu-west-2.amazonaws.com/akhil.png" />
+          <img alt="user profile pic" src="https://zaiocontent.s3.eu-west-2.amazonaws.com/akhil.png" />
         </div>
       </div>
     </footer>

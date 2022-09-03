@@ -1,11 +1,11 @@
 import React from "react";
 import "./VideoSidebar.css";
-import useVideoPlayer from "./hooks/useVideoPlayer";
-import { FiPenTool,FiList } from "react-icons/fi";
+// import useVideoPlayer from "./hooks/useVideoPlayer";
+import { FiPenTool } from "react-icons/fi";
 import { MdVolumeOff, MdLibraryBooks } from "react-icons/md";
 
 function VideoSidebar({ quizOptions, videoRef }) {
-  const { handleSkipToTime } = useVideoPlayer(videoRef);
+  // const { handleSkipToTime } = useVideoPlayer(videoRef);
   return (
     <div className="videoSidebar">
       <div className="videoSidebar__button">
