@@ -4,96 +4,116 @@ import { useState, useEffect } from "react";
 
 const useVideoPlayer = (videoElement) => {
   const [playerState, setPlayerState] = useState({
-    isPlaying: false,
-    progress: 0,
-    speed: 1,
-    isMuted: false,
+    playing: false,
+    volume: 0.8,
+    muted: false,
+    played: 0,
+    loaded: 0,
+    duration: 0,
+    playbackRate: 1.0,
+    loop: true,
+    isQuizDisplayed: false,
   });
 
-  const togglePlay = () => {
+    useEffect(() => {
+      console.log("LATEST UPDATE", playerState);
+    }, [playerState]);
+
+  const load = (url) => {
     setPlayerState({
       ...playerState,
-      isPlaying: !playerState.isPlaying,
+      url,
+      played: 0,
+      loaded: 0,
     });
   };
 
-  useEffect(() => {
-    // if (playerState.isPlaying) {
-    //   videoElement.current.play().catch((e) => {
-    //     alert(e);
-    //   });
-    // } else {
-    //   videoElement.current.pause();
-    // }
-    
-  }, [playerState.isPlaying, videoElement]);
+  const handlePlayPause = () => {
+    setPlayerState({ ...playerState, playing: !playerState.playing });
+  };
 
-  const handleOnTimeUpdate = () => {
-    const progress =
-      (videoElement.current.currentTime / videoElement.current.duration) * 100;
+  const handleStop = () => {
+    setPlayerState({ ...playerState, url: null, playing: false });
+  };
+
+  const handleVolumeChange = (e) => {
+    setPlayerState({ ...playerState, volume: parseFloat(e.target.value) });
+  };
+
+  const handleToggleMuted = () => {
+    setPlayerState({ ...playerState, muted: !playerState.muted });
+  };
+
+  const handleSetPlaybackRate = (e) => {
     setPlayerState({
       ...playerState,
-      progress,
+      playbackRate: parseFloat(e.target.value),
     });
   };
 
-  const handleVideoProgress = (event) => {
-    console.log(event);
-    const manualChange = Number(event.target.value);
-    console.log("manualChange", manualChange);
-    console.log("DURATION", videoElement.current.duration);
-    console.log("currentTime", videoElement.current.currentTime);
-    videoElement.current.currentTime =
-      (videoElement.current.duration / 100) * manualChange;
-    setPlayerState({
-      ...playerState,
-      progress: manualChange,
-    });
+  const handleOnPlaybackRateChange = (speed) => {
+    setPlayerState({ ...playerState, playbackRate: parseFloat(speed) });
   };
 
-  const handleSkipToTime = (index, optionRedirects) => {
-    const myArray = optionRedirects[index].split(":");
-    const manualChange = Number(myArray[0]) * 60 + Number(myArray[1]);
-
-    videoElement.current.currentTime =
-      (videoElement.current.duration / 100) * manualChange;
-    setPlayerState({
-      ...playerState,
-      progress: manualChange,
-    });
-    togglePlay();
+  const handlePlay = () => {
+    console.log("onPlay");
+    setPlayerState({ ...playerState, playing: true });
   };
 
-  const handleVideoSpeed = (event) => {
-    const speed = Number(event.target.value);
-    videoElement.current.playbackRate = speed;
-    setPlayerState({
-      ...playerState,
-      speed,
-    });
+  const handlePause = () => {
+    console.log("onPause");
+    setPlayerState({ ...playerState, playing: false });
   };
 
-  const toggleMute = () => {
-    setPlayerState({
-      ...playerState,
-      isMuted: !playerState.isMuted,
-    });
+  const handleSeekChange = (e) => {
+    const manualNumberInDecimal = parseFloat(e.target.value) / 100;
+    // console.log("manualNumberInDecimal", manualNumberInDecimal);
+    videoElement.current.seekTo(manualNumberInDecimal);
+    setPlayerState((prevPlayerState) => ({
+      ...prevPlayerState,
+      played: manualNumberInDecimal,
+    }));
   };
 
-  useEffect(() => {
-    playerState.isMuted
-      ? (videoElement.current.muted = true)
-      : (videoElement.current.muted = false);
-  }, [playerState.isMuted, videoElement]);
+  const handleProgress = (state, quizDisplayTimeInt) => {
+    console.log("onProgress", state);
+
+    if (quizDisplayTimeInt === parseInt(state.playedSeconds)) {
+      handlePause();
+      setPlayerState((prevPlayerState) => ({
+        ...prevPlayerState,
+        isQuizDisplayed: true,
+      }));
+    } else {
+      setPlayerState((prevPlayerState) => ({ ...prevPlayerState, ...state }));
+    }
+  };
+
+  const handleEnded = () => {
+    console.log("onEnded");
+    setPlayerState({ ...playerState, playing: playerState.loop });
+  };
+
+  const handleDuration = (duration) => {
+    console.log("onDuration", duration);
+    setPlayerState({ ...playerState, duration });
+  };
 
   return {
     playerState,
-    togglePlay,
-    handleOnTimeUpdate,
-    handleVideoProgress,
-    handleVideoSpeed,
-    toggleMute,
-    handleSkipToTime,
+    load,
+    handlePlayPause,
+    handleStop,
+    handleVolumeChange,
+    handleToggleMuted,
+    handleSetPlaybackRate,
+    handleOnPlaybackRateChange,
+    handlePlay,
+    handlePause,
+    handleSeekChange,
+    handleProgress,
+    handleEnded,
+    handleDuration,
   };
 };
 
