@@ -8,12 +8,12 @@ import "./Footer.css";
 function Footer() {
   return (
     <footer className="footer">
-      <div class="navbar-icons">
+      <div className="navbar-icons">
         <FiHome className="icons" />
         <FiPenTool className="icons" />
         <MdMovieFilter className="icons" />
         <MdOutlineGroupAdd className="icons" />
-        <div class="icons post-pic">
+        <div className="icons post-pic">
           <img alt="user profile pic" src="https://zaiocontent.s3.eu-west-2.amazonaws.com/akhil.png" />
         </div>
       </div>

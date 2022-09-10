@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import VideoFooter from "../VideoFooter/VideoFooter";
 import VideoSidebar from "../VideoSidebar/VideoSidebar";
 // import useVideoPlayer from "../../hooks/useVideoPlayer";
 import ReactPlayer from "react-player";
+import Note from "../Note/Note";
 // import QuizOptions from "../QuizOptions/QuizOptions";
 // import { QuizReelContext } from "../../contexts/QuizReelContext";
 
@@ -10,11 +11,13 @@ import "./Video.css";
 
 function Video({
   url,
-  channel,
   description,
   quizOptions,
   displayQuizTimestampInt,
-  song,
+  hasQuiz,
+  title,
+  index,
+  displayQuizTimestampString,
 }) {
   const videoRef = useRef(null);
   const [playerState, setPlayerState] = useState({
@@ -29,19 +32,26 @@ function Video({
     isQuizDisplayed: false,
     videoElement: null,
     seeking: false,
-    playedSeconds: 0,    
+    playedSeconds: 0,
   });
   const [displayQuiz, setDisplayQuiz] = useState(false);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
+  const [note, setNote] = useState({
+    active: false,
+    title: "title",
+    description: "description",
+    timestamp: "",
+  });
 
   useEffect(() => {
-    // setVideoElement(videoRef);
-    // console.log("VIDEOREF", videoRef);
-    // console.log(playerState.playedSeconds, displayQuizTimestampInt);
-
-    console.log("playerState",playerState)
-    
-  }, [playerState]);
+    const elem = document.querySelector("#video0");
+    elem.addEventListener("scroll", () => {
+      console.log("scroll event fired!");
+      // Y
+      // const y = videoRef.current;
+      console.log(elem.getBoundingClientRect());
+    });
+  }, [videoRef]);
 
   const handlePlayPause = () => {
     setPlayerState({ ...playerState, playing: !playerState.playing });
@@ -58,15 +68,20 @@ function Video({
 
   const handleProgress = (state) => {
     // console.log("onProgress", state);
-    if (
-      (parseInt(playerState.playedSeconds) === parseInt(displayQuizTimestampInt) && playing)
-    ) {
-      setDisplayQuiz(true);
-      handlePause();
+    if (hasQuiz) {
+      if (
+        parseInt(playerState.playedSeconds) ===
+          parseInt(displayQuizTimestampInt) &&
+        playing
+      ) {
+        setDisplayQuiz(true);
+        handlePause();
+      } else {
+        setPlayerState((prevPlayerState) => ({ ...prevPlayerState, ...state }));
+      }
     } else {
       setPlayerState((prevPlayerState) => ({ ...prevPlayerState, ...state }));
     }
-      
   };
 
   const handlePlay = () => {
@@ -79,35 +94,59 @@ function Video({
     setPlayerState({ ...playerState, playing: false });
   };
 
+  const handleMuteUnmute = () => {
+    setPlayerState({ ...playerState, muted: !playerState.muted });
+  };
+
+  const handleTakeNote = () => {
+    console.log(
+      "Taking note at: ",
+      playerState.playedSeconds,
+      title,
+      description
+    );
+    handlePause();
+    const timestamp = new Date(playerState.playedSeconds * 1000).toISOString().slice(14, 19);
+    setNote({
+      ...note,
+      active: true,
+      title,
+      description,
+      timestamp
+    });
+  };
+  const handleCloseNote = () => {
+    setNote({ ...note, active: false });
+  };
+
   const handleQuizOptionSelect = (index, quizOptions) => {
     console.log(index, quizOptions.redirectTimestamps[index]);
     const myArray = quizOptions.redirectTimestamps[index].split(":");
     const manualChange = Number(myArray[0]) * 60 + Number(myArray[1]);
-
-    const updatedTimeFraction = (manualChange / playerState.loadedSeconds);
-
-    console.log("updatedTimeFraction", updatedTimeFraction, manualChange)
+    const updatedTimeFraction = manualChange / playerState.loadedSeconds;
+    console.log("updatedTimeFraction", updatedTimeFraction, manualChange);
     videoRef.current.seekTo(updatedTimeFraction, "fraction");
     setPlayerState((prevPlayerState) => ({
       ...prevPlayerState,
       played: updatedTimeFraction,
-      playing: true
+      playing: true,
     }));
     setDisplayQuiz(false);
     setIsOptionSelected(true);
   };
 
-  const { playing, volume, muted, loop, played, playbackRate } =
-    playerState;
+  const { playing, volume, muted, loop, played, playbackRate } = playerState;
 
   return (
     <div className="video">
       <div className="video_click" onClick={() => handlePlayPause()}>
+        {note.active && <Note note={note} handleCloseNote={handleCloseNote} />}
         <ReactPlayer
+          id={"video" + index}
           ref={videoRef}
           className="video__player"
           url={url}
-          playing={playing}
+          playing={playing && !note.active}
           width={"100%"}
           height={"100%"}
           playsinline={true}
@@ -119,7 +158,7 @@ function Video({
           // onStart={() => console.log("onStart")}
           onPlay={handlePlay}
           onPause={handlePause}
-          // onBuffer={() => console.log("onBuffer")}
+          // onBuffer={() => setBuffer(true)}
           // onPlaybackRateChange={handleOnPlaybackRateChange}
           // onSeek={(e) => console.log("onSeek", e)}
           // onEnded={handleEnded}
@@ -143,16 +182,23 @@ function Video({
       {!playing ? (
         <>
           <VideoFooter
-            channel={channel}
+            title={title}
             description={description}
             displayQuiz={displayQuiz}
-            quizOptions={quizOptions}
-            handleQuizOptionSelect={handleQuizOptionSelect}
+            quizOptions={hasQuiz ? quizOptions : []}
+            handleQuizOptionSelect={hasQuiz ? handleQuizOptionSelect : null}
             isOptionSelected={isOptionSelected}
+            hasQuiz={hasQuiz ?? false}
           />
-          <VideoSidebar quizOptions={quizOptions} videoRef={videoRef} />
         </>
       ) : null}
+
+      <VideoSidebar
+        muted={muted}
+        handleMuteUnmute={handleMuteUnmute}
+        playing={playing}
+        handleTakeNote={handleTakeNote}
+      />
     </div>
   );
 }

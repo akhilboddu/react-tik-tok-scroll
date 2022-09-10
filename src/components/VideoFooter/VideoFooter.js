@@ -2,48 +2,54 @@ import React, { useState } from "react";
 import "./VideoFooter.css";
 import TextTruncate from "react-text-truncate"; // recommend
 import QuizOptions from "../QuizOptions/QuizOptions";
+import { MdQuiz } from "react-icons/md";
 // import useVideoPlayer from "../../hooks/useVideoPlayer";
-
 function VideoFooter({
-  channel,
+  title,
   description,
-  song,
   displayQuiz,
   handleQuizOptionSelect,
   quizOptions,
-  isOptionSelected
+  hasQuiz,
 }) {
   const [max, setMax] = useState(false);
 
-  const t = `orem-Labore cupidatat ut magna ad. Incididunt ad pariatur mollit
-  laboris eiusmod consectetur culpa duis minim. In ut et laboris sit
-  amet laborum officia incididunt cillum laborum irure eu. Reprehenderit
-  culpa do magna qui mollit sit qui velit`;
-
   return (
-    <div className={`videoContainer ${max ? "maxVideoContainer" : ""}`}>
+    <div
+      className={`videoContainer ${
+        max || displayQuiz ? "maxVideoContainer" : ""
+      }`}
+    >
       <div className="videoFooter">
         <div className="quizOptions">
-          {displayQuiz ? <QuizOptions quizOptions={quizOptions} handleQuizOptionSelect={handleQuizOptionSelect} /> : null}
+          {displayQuiz && hasQuiz ? (
+            <QuizOptions
+              quizOptions={quizOptions}
+              handleQuizOptionSelect={handleQuizOptionSelect}
+            />
+          ) : null}
           {/* {isOptionSelected ? <QuizOptions quizOptions={quizOptions} handleQuizOptionSelect={handleQuizOptionSelect} />} */}
         </div>
-        <div class="post-pic">
-          <img
-            alt="pic of course"
-            src="https://res.cloudinary.com/ak-124210/image/upload/v1642434078/yjnzwmihmhghxkwnb6n9.png"
-          />
-          <span class="profile-name">
-            {displayQuiz ? "Quiz Time" : "What is html?"}
-          </span>
+        <div className="post-pic">
+          {hasQuiz ? (
+            <MdQuiz className="icons" />
+          ) : (
+            <img
+              alt="pic of course"
+              src="https://res.cloudinary.com/ak-124210/image/upload/v1642434078/yjnzwmihmhghxkwnb6n9.png"
+            />
+          )}
+
+          <span className="profile-name">{title}</span>
           {!displayQuiz ? <button className="signup-cta">Signup</button> : null}
         </div>
-        <div class="video-caption">
+        <div className="video-caption">
           {!max ? (
             <TextTruncate
               line={1}
               element="span"
               truncateText="…"
-              text={displayQuiz ? "USE CUSTOM QUIZ DESCRIPTION" : t}
+              text={description}
               textTruncateChild={
                 <span
                   style={{ cursor: "pointer" }}
@@ -55,7 +61,7 @@ function VideoFooter({
             />
           ) : (
             <span style={{ cursor: "pointer" }} onClick={() => setMax(false)}>
-              {displayQuiz ? "USE CUSTOM QUIZ DESCRIPTION" : t} <br />
+              {description} <br />
               <strong style={{ marginTop: "1rem" }}>view less</strong>
             </span>
           )}

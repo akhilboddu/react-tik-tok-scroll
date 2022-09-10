@@ -12,6 +12,7 @@ function App() {
     db.collection("videos").onSnapshot((snapshot) =>
       setVideos(snapshot.docs.map((doc) => doc.data()))
     );
+   
   }, []);
 
   return (
@@ -20,39 +21,28 @@ function App() {
     <div className="app">
       <Header />
       <div className="app__videos">
-        {videos.map(
-          ({
-            url,
-            channel,
-            description,
-            song,
-            likes,
-            messages,
-            shares,
-            quizOptions,
-          }) => {
+        {videos
+          .sort((a, b) => a.index - b.index)
+          .map(({ index, url, title, description, quizOptions, hasQuiz }) => {
             const myArray = quizOptions.quizDisplayTimeStamp.split(":");
             const displayQuizTimestampInt =
               Number(myArray[0]) * 60 + Number(myArray[1]);
             return (
               <>
                 <Video
-                  url={
-                    "https://zaiocontent.s3.eu-west-2.amazonaws.com/test1.mp4"
-                  }
-                  channel={channel}
-                  song={song}
-                  likes={likes}
-                  messages={messages}
+                  key={index}
+                  url={url}
+                  title={title}
                   description={description}
-                  shares={shares}
                   quizOptions={quizOptions}
+                  displayQuizTimestampString={quizOptions.quizDisplayTimeStamp}
                   displayQuizTimestampInt={displayQuizTimestampInt}
+                  hasQuiz={hasQuiz}
+                  index={index}
                 />
               </>
             );
-          }
-        )}
+          })}
       </div>
       <Footer />
     </div>

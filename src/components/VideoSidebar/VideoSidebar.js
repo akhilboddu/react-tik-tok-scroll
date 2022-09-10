@@ -2,9 +2,9 @@ import React from "react";
 import "./VideoSidebar.css";
 // import useVideoPlayer from "./hooks/useVideoPlayer";
 import { FiPenTool } from "react-icons/fi";
-import { MdVolumeOff, MdLibraryBooks } from "react-icons/md";
+import { MdVolumeOff, MdLibraryBooks,MdOutlineVolumeUp } from "react-icons/md";
 
-function VideoSidebar({ quizOptions, videoRef }) {
+function VideoSidebar({ muted, handleMuteUnmute, handleTakeNote }) {
   // const { handleSkipToTime } = useVideoPlayer(videoRef);
   return (
     <div className="videoSidebar">
@@ -13,14 +13,14 @@ function VideoSidebar({ quizOptions, videoRef }) {
         <div><small><strong>7/10</strong></small></div>
       </div>
       
-      <div className="videoSidebar__button">
+      <div className="videoSidebar__button" onClick={handleTakeNote}>
         <FiPenTool className="icons" />
         <div><small><strong>Note</strong></small></div>
       </div>
 
-      <div className="videoSidebar__button">
-        <MdVolumeOff className="icons" />
-        <div><small><strong>Unmute</strong></small></div>
+      <div className="videoSidebar__button" onClick={handleMuteUnmute}>
+        {muted ? <MdVolumeOff className="icons" /> : <MdOutlineVolumeUp className="icons" />}
+        <div><small><strong>{muted ? "Unmute" : "Mute" }</strong></small></div>
       </div>
 
       {/* {quizOptions.quizOptions.map((quizOption, index) => (
